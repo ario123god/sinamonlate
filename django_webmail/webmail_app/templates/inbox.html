@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="subtitle">Inbox for {{ mailbox.address }}</h2>
+<table class="table is-fullwidth">
+    <thead><tr><th>From</th><th>Subject</th><th>Date</th></tr></thead>
+    <tbody>
+        {% for item in messages %}
+            <tr>
+                <td>{{ item.sender }}</td>
+                <td>{{ item.subject }}</td>
+                <td>{{ item.created_at }}</td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="3">No messages yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

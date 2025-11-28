@@ -1,0 +1,37 @@
+myhostname = mail.webiime.ir
+mydomain = webiime.ir
+myorigin = /etc/mailname
+smtpd_banner = $myhostname ESMTP
+biff = no
+append_dot_mydomain = no
+readme_directory = no
+
+# TLS
+smtpd_tls_cert_file=/etc/letsencrypt/live/mail.webiime.ir/fullchain.pem
+smtpd_tls_key_file=/etc/letsencrypt/live/mail.webiime.ir/privkey.pem
+smtpd_use_tls=yes
+smtpd_tls_auth_only = yes
+
+# SASL authentication using Dovecot
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+smtpd_sasl_auth_enable = yes
+smtpd_recipient_restrictions =
+    permit_mynetworks,
+    permit_sasl_authenticated,
+    reject_unauth_destination
+
+mydestination = localhost
+mynetworks = 127.0.0.0/8
+relay_domains =
+
+virtual_mailbox_domains = webiime.ir
+virtual_mailbox_base = /var/mail/vhosts
+virtual_mailbox_maps = mysql:/etc/postfix/mysql-virtual-mailbox-maps.cf
+virtual_alias_maps = mysql:/etc/postfix/mysql-virtual-alias-maps.cf
+virtual_transport = lmtp:unix:private/dovecot-lmtp
+
+mailbox_size_limit = 0
+recipient_delimiter = +
+inet_interfaces = all
+inet_protocols = ipv4

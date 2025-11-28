@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>webiime Webmail</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body>
+<section class="section">
+    <div class="container">
+        <h1 class="title">webiime Webmail</h1>
+        {% if user.is_authenticated %}
+            <p>Signed in as {{ user.username }} (<a href="{% url 'logout' %}">logout</a>)</p>
+            <p><a href="{% url 'inbox' %}">Inbox</a> | <a href="{% url 'compose' %}">Compose</a></p>
+        {% else %}
+            <p><a href="{% url 'login' %}">Login</a> | <a href="{% url 'register' %}">Register</a></p>
+        {% endif %}
+        <hr>
+        {% for message in messages %}
+            <div class="notification is-info">{{ message }}</div>
+        {% endfor %}
+        {% block content %}{% endblock %}
+    </div>
+</section>
+</body>
+</html>
